@@ -60,5 +60,9 @@ typings/
 client/dist/bundle.js
 
 # sample data
-.csv
-.json
+*.csv
+*.json
+
+# macOS
+.DS_Store
+

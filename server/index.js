@@ -60,6 +60,8 @@ app.get("/:id", (req, res) => {
   res.sendFile(path.join(__dirname + "/../client/dist/index.html"));
 });
 
-app.listen(3010, function() {
-  console.log("Listening on 3002!");
+const PORT = 3010;
+
+app.listen(PORT, function() {
+  console.log(`Listening on port ${PORT}`);
 });

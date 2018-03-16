@@ -2,6 +2,39 @@ import React from "react";
 import ReactDOM from "react-dom";
 import axios from "axios";
 
+const Business = (props) => (
+  <div className="rightsb_media-block">
+    <div className="rightsb_media-avatar">
+      <div className="rightsb_image_box">
+        <img
+          className="rightsb_image_biz"
+          src={`https://s3-media3.fl.yelpcdn.com/bphoto/${
+            props.photo
+          }/120s.jpg`}
+        />
+      </div>
+    </div>
+    <div className="rightsb_media-story">
+      <div className="rightsb_media-title">
+        {props.matchBiz.name || 'Example Restaurant'}
+      </div>
+      <div className="rightsb_bizrating">
+        <div className="rightsb_star-rating">
+          <img
+            className="rightsb_stars"
+            src={props.starRating || 3.5}
+          />
+        </div>
+        <span className="rightsb_review-count">
+          {props.matchBiz1.review_count || 42} reviews
+        </span>
+      </div>
+      <q className="rightsb_tips">{props.tip || 'Now is the time for all good men to come to the aid of their country.'}</q>
+    </div>
+  </div>
+);
+
+
 class App extends React.Component {
   constructor(props) {
     super(props);
@@ -254,20 +287,20 @@ class App extends React.Component {
                 </div>
                 <div className="rightsb_media-story">
                   <div className="rightsb_media-title">
-                    {this.state.matchBiz1.name}
+                    {this.state.matchBiz1.name || 'Example Restaurant'}
                   </div>
                   <div className="rightsb_bizrating">
                     <div className="rightsb_star-rating">
                       <img
                         className="rightsb_stars"
-                        src={this.state.starRating1}
+                        src={this.state.starRating1 || 3.5}
                       />
                     </div>
                     <span className="rightsb_review-count">
-                      {this.state.matchBiz1.review_count} reviews
+                      {this.state.matchBiz1.review_count || 42} reviews
                     </span>
                   </div>
-                  <q className="rightsb_tips">{this.state.tip1}</q>
+                  <q className="rightsb_tips">{this.state.tip1 || 'Now is the time for all good men to come to the aid of their country.'}</q>
                 </div>
               </div>
             </li>
