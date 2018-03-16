@@ -58,3 +58,7 @@ typings/
 .env
 
 client/dist/bundle.js
+
+# sample data
+.csv
+.json
