@@ -36,6 +36,7 @@
 .rightsb_image_biz {
   height: 70px;
   width: 70px;
+  border-radius: 4px;
 }
 
 .rightsb_media-story {
