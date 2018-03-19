@@ -1,6 +1,7 @@
 const express = require("express");
 const app = express();
-const mysql = require("mysql");
+const cassandra = require('cassandra-driver');
+const client = new cassandra.Client({ contactPoints: ['localhost'], keyspace: 'dev' });
 const path = require("path");
 const morgan = require('morgan');
 
@@ -8,12 +9,6 @@ app.use(morgan('dev'));
 app.use(express.static("./client/dist/"));
 
 
-const connection = mysql.createConnection({
-  host: "localhost",
-  user: "root",
-  database: "chompy_bottom_right",
-  // password: "chompydatabase"
-});
 // const connection = mysql.createConnection({
 //   host: "chompy-test-database.cr8yw4uwndba.us-west-1.rds.amazonaws.com",
 //   user: "root",
@@ -21,22 +16,24 @@ const connection = mysql.createConnection({
 //   password: "chompydatabase"
 // });
 
-connection.connect(function(err) {
-  if (err) {
-    console.log("mySQL ERROR");
-  } else {
-    console.log("mySQL CONNECTED");
-  }
-});
+// connection.connect(function(err) {
+//   if (err) {
+//     console.log("mySQL ERROR");
+//   } else {
+//     console.log("mySQL CONNECTED");
+//   }
+// });
 
 app.get("/sidebar/business/:id", function(req, res) {
   var id = req.params.id;
-
-  let q = `SELECT * FROM restaurants WHERE restaurant_id = "${id}"`;
-  connection.query(q, function(err, rows, fields) {
-    if (err) throw err;
-    res.status(201).send(rows);
-  });
+  let q = `SELECT * FROM restaurants WHERE id=${id}`;
+  client.execute(q)
+    .then(result => res.status(201).send(result))
+    .catch((err) => {throw err});
+  // connection.query(q, function(err, rows, fields) {
+  //   if (err) throw err;
+  //   res.status(201).send(rows);
+  // });
 });
 
 // app.get("/sidebar/postalCode/:code", function(req, res) {
@@ -50,20 +47,26 @@ app.get("/sidebar/business/:id", function(req, res) {
 
 app.get("/sidebar/businessTips/:id", function(req, res) {
   var id = req.params.id;
-  let q = `SELECT * FROM tips WHERE restaurant_id="${id}" LIMIT 1`;
-  connection.query(q, function(err, rows, fields) {
-    if (err) throw err;
-    res.status(201).send(rows);
-  });
+  let q = `SELECT * FROM tips WHERE restaurant_id=${id} LIMIT 1`;
+  client.execute(q)
+    .then(result => res.status(201).send(result))
+    .catch((err) => {throw err});
+  // connection.query(q, function(err, rows, fields) {
+  //   if (err) throw err;
+  //   res.status(201).send(rows);
+  // });
 });
 
 app.get("/sidebar/photos/:id", function(req, res) {
   var id = req.params.id;
-  let q = `SELECT * FROM photos WHERE restaurant_id="${id}" LIMIT 1`;
-  connection.query(q, function(err, rows, fields) {
-    if (err) throw error;
-    res.status(201).send(rows);
-  });
+  let q = `SELECT * FROM photos WHERE restaurant_id=${id} LIMIT 1`;
+  client.execute(q)
+    .then(result => res.status(201).send(result.rows[0]))
+    .catch((err) => {throw err});
+  // connection.query(q, function(err, rows, fields) {
+  //   if (err) throw error;
+  //   res.status(201).send(rows);
+  // });
 });
 
 app.get('/loading.gif', (req, res) => {
