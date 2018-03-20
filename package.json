@@ -5,6 +5,7 @@
   "main": "index.js",
   "scripts": {
     "start": "nodemon ./server/index.js",
+    "start-with-cassandra": "nodemon ./server/index-cassandra",
     "react-dev": "webpack -d --watch",
     "test": "jest",
     "docker": "node ./server/index.js && webpack -d"
@@ -21,6 +22,7 @@
   "homepage": "https://github.com/codenamesgroup/Bottom-right-sidebar#readme",
   "dependencies": {
     "axios": "^0.18.0",
+    "cassandra-driver": "^3.4.1",
     "css-loader": "^0.28.10",
     "has-flag": "^3.0.0",
     "mysql": "^2.15.0",
@@ -45,6 +47,7 @@
     "express": "^4.16.2",
     "faker": "^4.1.0",
     "jest": "^22.4.2",
+    "morgan": "^1.9.0",
     "prettier-eslint": "^8.8.1",
     "webpack": "^3.11.0"
   }
