@@ -1,7 +1,7 @@
 const express = require("express");
 const app = express();
 const cassandra = require('cassandra-driver');
-const client = new cassandra.Client({ contactPoints: ['localhost'], keyspace: 'dev' });
+const client = new cassandra.Client({ contactPoints: ['localhost'], keyspace: 'chompy_bottom_right' });
 const path = require("path");
 const morgan = require('morgan');
 
@@ -26,9 +26,9 @@ app.use(express.static("./client/dist/"));
 
 app.get("/sidebar/business/:id", function(req, res) {
   var id = req.params.id;
-  let q = `SELECT * FROM restaurants WHERE id=${id}`;
+  let q = `SELECT * FROM restaurants WHERE restaurant_id=${id}`;
   client.execute(q)
-    .then(result => res.status(201).send(result))
+    .then(result => res.status(201).send(result.rows[0]))
     .catch((err) => {throw err});
   // connection.query(q, function(err, rows, fields) {
   //   if (err) throw err;
@@ -47,9 +47,10 @@ app.get("/sidebar/business/:id", function(req, res) {
 
 app.get("/sidebar/businessTips/:id", function(req, res) {
   var id = req.params.id;
-  let q = `SELECT * FROM tips WHERE restaurant_id=${id} LIMIT 1`;
+  let q = `SELECT * FROM tips WHERE restaurant_id=${id}`;
+  console.log('q', q);
   client.execute(q)
-    .then(result => res.status(201).send(result))
+    .then(result => res.status(201).send(result.rows[0]))
     .catch((err) => {throw err});
   // connection.query(q, function(err, rows, fields) {
   //   if (err) throw err;

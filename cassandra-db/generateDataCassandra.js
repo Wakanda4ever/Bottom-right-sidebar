@@ -1,19 +1,23 @@
 const fs = require('fs');
 const faker = require('faker');
+const Uuid = require('cassandra-driver').types.Uuid;
+
 const businessesFile = fs.createWriteStream('./restaurants.csv');
 const tipsFile = fs.createWriteStream('./tips.csv');
 const photosFile = fs.createWriteStream('./photos.csv');
 const cuisines = fs.readFileSync('cuisines.txt').toString().split('\n');
 const rInt = max => Math.floor( Math.random() * max ) + 1;
 
-const QUANTITY = 1e2;
+const QUANTITY = 1e7;
 
 const makeRestaurantObj = (id) => {
   // TODO optimize random unique cuisine selection
   let tempCuisines = cuisines.slice();
+  const RestaurantUuid = Uuid.random();
   const restaurant = {
+    id: RestaurantUuid,
     restaurant_id: id,
-    name: faker.company.companyName(),
+    name: faker.company.compasnyName(),
     city: faker.address.city(),
     avgScore: rInt(50),
     reviewCount: Math.floor(Math.random() * 1000),
@@ -29,7 +33,7 @@ const makeRestaurantObj = (id) => {
 
 const makeTipObj = (id) => {
   const tip = {
-    // id: id,
+    id: Uuid.random(),
     restaurant_id: id,
     text: faker.lorem.sentence(),
   };
@@ -38,7 +42,7 @@ const makeTipObj = (id) => {
 
 const makePhotoObj = (id) => {
   const photo = {
-    // id: id,
+    id: Uuid.random(),
     restaurant_id: id,
     thumbnailUrl: 'http://lorempixel.com/60/60',
   };

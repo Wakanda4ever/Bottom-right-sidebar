@@ -58,23 +58,16 @@ class App extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      business: [{}],
-      // postalCode: Number,
-      alsoViewed1: [{}],
-      alsoViewed2: [{}],
-      alsoViewed3: [{}],
+      business: [{cuisine1: 'loading...'}],
+      alsoViewed1: {},
+      alsoViewed2: {},
+      alsoViewed3: {},
       tip1: null,
       tip2: null,
       tip3: null,
       photo1: '/loading.gif',
       photo2: '/loading.gif',
       photo3: '/loading.gif',
-      // image1: [{}],
-      // image2: [{}],
-      // image3: [{}],
-      // starRating1: null,
-      // starRating2: null,
-      // starRating3: null
     };
   }
 
@@ -90,11 +83,11 @@ class App extends React.Component {
       })
       .then(() => {
         // var postalCode = this.state.business[0].postal_code;
-        var bizId = this.state.business[0].restaurant_id;
+        var bizId = this.state.business.restaurant_id;
         // this.setState({ postalCode: postalCode });
         // this.fetchBusinessIds(postalCode);
-        this.fetchAlsoVieweds(this.state.business[0].alsoViewed1, this.state.business[0].alsoViewed2, this.state.business[0].alsoViewed3);
-        // this.fetchPhotos(this.state.business[0].alsoViewed1._id, this.state.business[0].alsoViewed2._id. this.state.business[0].alsoViewed3._id);
+        this.fetchAlsoVieweds(this.state.business.alsoviewed1, this.state.business.alsoviewed2, this.state.business.alsoviewed3);
+        // this.fetchPhotos(this.state.business.alsoViewed1._id, this.state.business[0].alsoViewed2._id. this.state.business[0].alsoViewed3._id);
       })
       .catch(err => {
         console.log(err, "this is the error in the componentDidMount");
@@ -126,19 +119,19 @@ class App extends React.Component {
     axios
       .get(`/sidebar/photos/${id1}`)
       .then((response) => {
-        this.setState({photo1: response.data[0].thumbnailUrl});
+        this.setState({photo1: response.data.thumbnailurl});
       })
       .catch((err) => {throw err});
     axios
       .get(`/sidebar/photos/${id2}`)
       .then((response) => {
-        this.setState({photo2: response.data[0].thumbnailUrl});
+        this.setState({photo2: response.data.thumbnailurl});
       })
       .catch((err) => {throw err});
     axios
       .get(`/sidebar/photos/${id3}`)
       .then((response) => {
-        this.setState({photo3: response.data[0].thumbnailUrl});
+        this.setState({photo3: response.data.thumbnailurl});
       })
       .catch((err) => {throw err});
 
@@ -146,220 +139,22 @@ class App extends React.Component {
     axios
       .get(`/sidebar/businessTips/${id1}`)
       .then((response) => {
-        this.setState({tip1: response.data[0].text});
+        this.setState({tip1: response.data.text});
       })
       .catch((err) => {throw err});
     axios
       .get(`/sidebar/businessTips/${id2}`)
       .then((response) => {
-        this.setState({tip2: response.data[0].text});
+        this.setState({tip2: response.data.text});
       })
       .catch((err) => {throw err});
     axios
       .get(`/sidebar/businessTips/${id3}`)
       .then((response) => {
-        this.setState({tip3: response.data[0].text});
+        this.setState({tip3: response.data.text});
       })
       .catch((err) => {throw err});
   }
-
-  // fetchBusinessIds(postalCode) {
-  //   axios
-  //     .get("/sidebar/postalCode/" + postalCode)
-  //     .then(response => {
-  //       var biz1 = response.data[1];
-  //       var biz2 = response.data[2];
-  //       var biz3 = response.data[3];
-  //       this.setState({ matchBiz1: biz1, matchBiz2: biz2, matchBiz3: biz3 });
-  //       this.setStars(biz1.stars);
-  //       this.setStars(biz2.stars);
-  //       this.setStars(biz3.stars);
-  //       this.fetchTips(this.state.matchBiz1.id);
-  //       this.fetchTips(biz2.id);
-  //       this.fetchTips(biz3.id);
-  //       this.fetchPhotos(this.state.business[0].alsoViewed1._id, this.state.business[0].alsoViewed2._id. this.state.business[0].alsoViewed3._id);
-  //       // this.fetchPhotos(this.state.matchBiz2.id);
-  //       // this.fetchPhotos(this.state.matchBiz3.id);
-  //     })
-  //     .catch(err => {
-  //       console.log(err, "error fetch postalCode axios");
-  //     });
-  // }
-
-  // fetchPhotos(id1, id2, id3) {
-  //   axios
-  //     .get("/sidebar/photos/" + id1)
-  //     .then(response => {
-  //       console.log('**************** response', response);
-  //       this.setState({ photo1: response.data[0].thumbnailUrl });
-  //     })
-  //     .catch(error => {
-  //       console.log(error, "error fetchphotos axios");
-  //     });
-  //   axios
-  //     .get("/sidebar/photos/" + id2)
-  //     .then(response => {
-  //       this.setState({ photo2: response.data[0].thumbnailUrl });
-  //     })
-  //     .catch(error => {
-  //       console.log(error, "error fetchphotos axios");
-  //     });
-  //   axios
-  //     .get("/sidebar/photos/" + id3)
-  //     .then(response => {
-  //       this.setState({ photo3: response.data[0].thumbnailUrl });
-  //     })
-  //     .catch(error => {
-  //       console.log(error, "error fetchphotos axios");
-  //     });
-  // }
-
-  // fetchTips(bizId) {
-  //   axios
-  //     .get("/sidebar/businessTips/" + bizId)
-  //     .then(response => {
-  //       if (this.state.tip1 === null) {
-  //         this.setState({ tip1: response.data[0].text });
-  //       } else if (this.state.tip2 === null) {
-  //         this.setState({ tip2: response.data[0].text });
-  //       } else if (this.state.tip3 === null) {
-  //         this.setState({ tip3: response.data[0].text });
-  //       }
-  //     })
-  //     .catch(error => {
-  //       console.log(error, "error from fetchTips axios react");
-  //     });
-  // }
-
-  // setStars(stars) {
-  //   if (stars === 1) {
-  //     if (this.state.starRating1 === null) {
-  //       this.setState({
-  //         starRating1: "https://i.imgur.com/joRV605.png"
-  //       });
-  //     } else if (this.state.starRating2 === null) {
-  //       this.setState({
-  //         starRating2: "https://i.imgur.com/joRV605.png"
-  //       });
-  //     } else if (this.state.starRating3 === null) {
-  //       this.setState({
-  //         starRating3: "https://i.imgur.com/joRV605.png"
-  //       });
-  //     }
-  //   } else if (stars === 1.5) {
-  //     if (this.state.starRating1 === null) {
-  //       this.setState({
-  //         starRating1: "https://i.imgur.com/fqHSmyz.png"
-  //       });
-  //     } else if (this.state.starRating2 === null) {
-  //       this.setState({
-  //         starRating2: "https://i.imgur.com/fqHSmyz.png"
-  //       });
-  //     } else if (this.state.starRating3 === null) {
-  //       this.setState({
-  //         starRating3: "https://i.imgur.com/fqHSmyz.png"
-  //       });
-  //     }
-  //   } else if (stars === 2) {
-  //     if (this.state.starRating1 === null) {
-  //       this.setState({
-  //         starRating1: "https://i.imgur.com/GsBh9O5.png"
-  //       });
-  //     } else if (this.state.starRating2 === null) {
-  //       this.setState({
-  //         starRating2: "https://i.imgur.com/GsBh9O5.png"
-  //       });
-  //     } else if (this.state.starRating3 === null) {
-  //       this.setState({
-  //         starRating3: "https://i.imgur.com/GsBh9O5.png"
-  //       });
-  //     }
-  //   } else if (stars === 2.5) {
-  //     if (this.state.starRating1 === null) {
-  //       this.setState({
-  //         starRating1: "https://i.imgur.com/HHk4ca7.png"
-  //       });
-  //     } else if (this.state.starRating2 === null) {
-  //       this.setState({
-  //         starRating2: "https://i.imgur.com/HHk4ca7.png"
-  //       });
-  //     } else if (this.state.starRating3 === null) {
-  //       this.setState({
-  //         starRating3: "https://i.imgur.com/HHk4ca7.png"
-  //       });
-  //     }
-  //   } else if (stars === 3) {
-  //     if (this.state.starRating1 === null) {
-  //       this.setState({
-  //         starRating1: "https://i.imgur.com/eXa2t1X.png"
-  //       });
-  //     } else if (this.state.starRating2 === null) {
-  //       this.setState({
-  //         starRating2: "https://i.imgur.com/eXa2t1X.png"
-  //       });
-  //     } else if (this.state.starRating3 === null) {
-  //       this.setState({
-  //         starRating3: "https://i.imgur.com/eXa2t1X.png"
-  //       });
-  //     }
-  //   } else if (stars === 3.5) {
-  //     if (this.state.starRating1 === null) {
-  //       this.setState({
-  //         starRating1: "https://i.imgur.com/nDcH9au.png"
-  //       });
-  //     } else if (this.state.starRating2 === null) {
-  //       this.setState({
-  //         starRating2: "https://i.imgur.com/nDcH9au.png"
-  //       });
-  //     } else if (this.state.starRating3 === null) {
-  //       this.setState({
-  //         starRating3: "https://i.imgur.com/nDcH9au.png"
-  //       });
-  //     }
-  //   } else if (stars === 4) {
-  //     if (this.state.starRating1 === null) {
-  //       this.setState({
-  //         starRating1: "https://i.imgur.com/v2Ep8kQ.png"
-  //       });
-  //     } else if (this.state.starRating2 === null) {
-  //       this.setState({
-  //         starRating2: "https://i.imgur.com/v2Ep8kQ.png"
-  //       });
-  //     } else if (this.state.starRating3 === null) {
-  //       this.setState({
-  //         starRating3: "https://i.imgur.com/v2Ep8kQ.png"
-  //       });
-  //     }
-  //   } else if (stars === 4.5) {
-  //     if (this.state.starRating1 === null) {
-  //       this.setState({
-  //         starRating1: "https://i.imgur.com/e2b0NN4.png"
-  //       });
-  //     } else if (this.state.starRating2 === null) {
-  //       this.setState({
-  //         starRating2: "https://i.imgur.com/e2b0NN4.png"
-  //       });
-  //     } else if (this.state.starRating3 === null) {
-  //       this.setState({
-  //         starRating3: "https://i.imgur.com/e2b0NN4.png"
-  //       });
-  //     }
-  //   } else if (stars === 5) {
-  //     if (this.state.starRating1 === null) {
-  //       this.setState({
-  //         starRating1: "https://i.imgur.com/327Fh6y.png"
-  //       });
-  //     } else if (this.state.starRating2 === null) {
-  //       this.setState({
-  //         starRating2: "https://i.imgur.com/327Fh6y.png"
-  //       });
-  //     } else if (this.state.starRating3 === null) {
-  //       this.setState({
-  //         starRating3: "https://i.imgur.com/327Fh6y.png"
-  //       });
-  //     }
-  //   }
-  // }
 
   render() {
     return (
@@ -370,23 +165,23 @@ class App extends React.Component {
             <li>
               <Restaurant
                 photo={this.state.photo1}
-                name={this.state.alsoViewed1[0].name}
-                avgscore={this.state.alsoViewed1[0].avgScore}
-                review_count={this.state.alsoViewed1[0].reviewCount}
+                name={this.state.alsoViewed1.name}
+                avgscore={this.state.alsoViewed1.avgscore}
+                review_count={this.state.alsoViewed1.reviewcount}
                 tip={this.state.tip1}
               />
               <Restaurant
                 photo={this.state.photo2}
-                name={this.state.alsoViewed2[0].name}
-                avgscore={this.state.alsoViewed2[0].avgScore}
-                review_count={this.state.alsoViewed2[0].reviewCount}
+                name={this.state.alsoViewed2.name}
+                avgscore={this.state.alsoViewed2.avgscore}
+                review_count={this.state.alsoViewed2.reviewcount}
                 tip={this.state.tip2}
               />
               <Restaurant
                 photo={this.state.photo3}
-                name={this.state.alsoViewed3[0].name}
-                avgscore={this.state.alsoViewed3[0].avgScore}
-                review_count={this.state.alsoViewed3[0].reviewCount}
+                name={this.state.alsoViewed3.name}
+                avgscore={this.state.alsoViewed3.avgscore}
+                review_count={this.state.alsoViewed3.reviewcount}
                 tip={this.state.tip3}
               />
             </li>
@@ -396,17 +191,17 @@ class App extends React.Component {
             <ul className="rightsb_list">
               <li className="rightsb_other-list-item">
                 <a className="rightsb_other-list-item-arrange">
-                  Find more {this.state.business[0].cuisine1} near {this.state.business[0].name}
+                  Find more {this.state.business.cuisine1} near {this.state.business.name}
                 </a>
               </li>
               <li className="rightsb_other-list-item">
                 <a className="rightsb_other-list-item-arrange">
-                  Find more {this.state.business[0].cuisine2} near {this.state.business[0].name}
+                  Find more {this.state.business.cuisine2} near {this.state.business.name}
                 </a>
               </li>
               <li className="rightsb_other-list-item">
                 <a className="rightsb_other-list-item-arrange">
-                  Find more {this.state.business[0].cuisine3} near {this.state.business[0].name}
+                  Find more {this.state.business.cuisine3} near {this.state.business.name}
                 </a>
               </li>
             </ul>
@@ -467,7 +262,7 @@ class App extends React.Component {
           </div>
           <div>
             <h3 className="rightsb_subheader">
-              Dining in {this.state.business[0].city}
+              Dining in {this.state.business.city}
             </h3>
             <ul className="rightsb_list">
               <li>
@@ -495,22 +290,22 @@ class App extends React.Component {
                   </span>
                 </a>
                 <span className="rightsb_dining-list">
-                  Book a table in {this.state.business[0].city}
+                  Book a table in {this.state.business.city}
                 </span>
               </li>
             </ul>
           </div>
           <h2 className="rightsb_subheader">
-            Best of {this.state.business[0].city}
+            Best of {this.state.business.city}
           </h2>
           <p className="rightsb_bestof-list">
-            Things to do in {this.state.business[0].city}
+            Things to do in {this.state.business.city}
           </p>
           <h2 className="rightsb_subheader">
-            People found {this.state.business[0].name} by searching for...
+            People found {this.state.business.name} by searching for...
           </h2>
           <p className="rightsb_peoplefound-list">
-            Food {this.state.business[0].city}
+            Food {this.state.business.city}
           </p>
           <h2 className="rightsb_subheader">Near Me</h2>
           <p className="rightsb_nearme-list">Dinner</p>
