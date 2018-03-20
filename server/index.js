@@ -35,7 +35,7 @@ app.get("/sidebar/business/:id", function(req, res) {
   let q = `SELECT * FROM restaurants WHERE restaurant_id = "${id}"`;
   connection.query(q, function(err, rows, fields) {
     if (err) throw err;
-    res.status(201).send(rows);
+    res.status(201).send(rows[0]);
   });
 });
 
@@ -53,7 +53,7 @@ app.get("/sidebar/businessTips/:id", function(req, res) {
   let q = `SELECT * FROM tips WHERE restaurant_id="${id}" LIMIT 1`;
   connection.query(q, function(err, rows, fields) {
     if (err) throw err;
-    res.status(201).send(rows);
+    res.status(201).send(rows[0]);
   });
 });
 
@@ -62,7 +62,7 @@ app.get("/sidebar/photos/:id", function(req, res) {
   let q = `SELECT * FROM photos WHERE restaurant_id="${id}" LIMIT 1`;
   connection.query(q, function(err, rows, fields) {
     if (err) throw error;
-    res.status(201).send(rows);
+    res.status(201).send(rows[0]);
   });
 });
 

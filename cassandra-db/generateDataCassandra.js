@@ -8,7 +8,7 @@ const photosFile = fs.createWriteStream('./photos.csv');
 const cuisines = fs.readFileSync('cuisines.txt').toString().split('\n');
 const rInt = max => Math.floor( Math.random() * max ) + 1;
 
-const QUANTITY = 1e7;
+const QUANTITY = 1e2;
 
 const makeRestaurantObj = (id) => {
   // TODO optimize random unique cuisine selection
