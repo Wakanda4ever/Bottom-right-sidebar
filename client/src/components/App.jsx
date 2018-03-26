@@ -119,19 +119,19 @@ class App extends React.Component {
     axios
       .get(`/sidebar/photos/${id1}`)
       .then((response) => {
-        this.setState({photo1: response.data.thumbnailurl});
+        // this.setState({photo1: response.data.thumbnailurl});
       })
       .catch((err) => {throw err});
     axios
       .get(`/sidebar/photos/${id2}`)
       .then((response) => {
-        this.setState({photo2: response.data.thumbnailurl});
+        // this.setState({photo2: response.data.thumbnailurl});
       })
       .catch((err) => {throw err});
     axios
       .get(`/sidebar/photos/${id3}`)
       .then((response) => {
-        this.setState({photo3: response.data.thumbnailurl});
+        // this.setState({photo3: response.data.thumbnailurl});
       })
       .catch((err) => {throw err});
 

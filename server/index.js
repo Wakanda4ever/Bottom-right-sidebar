@@ -1,10 +1,11 @@
+require('newrelic');
 const express = require("express");
 const app = express();
 const mysql = require("mysql");
 const path = require("path");
-const morgan = require('morgan');
+// const morgan = require('morgan');
 
-app.use(morgan('dev'));
+// app.use(morgan('dev'));
 app.use(express.static("./client/dist/"));
 
 
@@ -38,15 +39,6 @@ app.get("/sidebar/business/:id", function(req, res) {
     res.status(201).send(rows[0]);
   });
 });
-
-// app.get("/sidebar/postalCode/:code", function(req, res) {
-//   var postalCode = req.params.code;
-//   let q = `SELECT * FROM restaurants WHERE postal_code="${postalCode}" AND review_count > 200 LIMIT 4`;
-//   connection.query(q, function(err, rows, fields) {
-//     if (err) throw err;
-//     res.status(201).send(rows);
-//   });
-// });
 
 app.get("/sidebar/businessTips/:id", function(req, res) {
   var id = req.params.id;

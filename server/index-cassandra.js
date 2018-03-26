@@ -1,11 +1,15 @@
+require('newrelic');
 const express = require("express");
 const app = express();
 const cassandra = require('cassandra-driver');
-const client = new cassandra.Client({ contactPoints: ['localhost'], keyspace: 'chompy_bottom_right' });
+// Development DB
+// const client = new cassandra.Client({ contactPoints: ['localhost'], keyspace: 'chompy_bottom_right' });
+// Deployed DB
+const client = new cassandra.Client({ contactPoints: ['cassandra://database'], keyspace: 'chompy_bottom_right' });
 const path = require("path");
-const morgan = require('morgan');
+// const morgan = require('morgan');
 
-app.use(morgan('dev'));
+// app.use(morgan('dev'));
 app.use(express.static("./client/dist/"));
 
 
@@ -48,7 +52,7 @@ app.get("/sidebar/business/:id", function(req, res) {
 app.get("/sidebar/businessTips/:id", function(req, res) {
   var id = req.params.id;
   let q = `SELECT * FROM tips WHERE restaurant_id=${id}`;
-  console.log('q', q);
+  // console.log('q', q);
   client.execute(q)
     .then(result => res.status(201).send(result.rows[0]))
     .catch((err) => {throw err});

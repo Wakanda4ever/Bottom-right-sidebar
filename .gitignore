@@ -66,3 +66,4 @@ client/dist/bundle.js
 # macOS
 .DS_Store
 
+newrelic.config.js

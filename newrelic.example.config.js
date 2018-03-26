@@ -1,0 +1,1 @@
+module.exports = 'YOUR_LICENSE_KEY_HERE';

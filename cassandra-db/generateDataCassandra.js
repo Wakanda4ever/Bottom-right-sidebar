@@ -2,13 +2,13 @@ const fs = require('fs');
 const faker = require('faker');
 const Uuid = require('cassandra-driver').types.Uuid;
 
-const businessesFile = fs.createWriteStream('./restaurants.csv');
-const tipsFile = fs.createWriteStream('./tips.csv');
-const photosFile = fs.createWriteStream('./photos.csv');
-const cuisines = fs.readFileSync('cuisines.txt').toString().split('\n');
+const businessesFile = fs.createWriteStream('./cassandra-db/restaurants.csv');
+const tipsFile = fs.createWriteStream('./cassandra-db/tips.csv');
+const photosFile = fs.createWriteStream('./cassandra-db/photos.csv');
+const cuisines = fs.readFileSync('./cassandra-db/cuisines.txt').toString().split('\n');
 const rInt = max => Math.floor( Math.random() * max ) + 1;
 
-const QUANTITY = 1e2;
+const QUANTITY = 100001;
 
 const makeRestaurantObj = (id) => {
   // TODO optimize random unique cuisine selection
@@ -17,7 +17,7 @@ const makeRestaurantObj = (id) => {
   const restaurant = {
     id: RestaurantUuid,
     restaurant_id: id,
-    name: faker.company.compasnyName(),
+    name: faker.company.companyName(),
     city: faker.address.city(),
     avgScore: rInt(50),
     reviewCount: Math.floor(Math.random() * 1000),
@@ -56,6 +56,9 @@ function writeManyTimesCSV(file, generator, quantity) {
     let ok = true;
     // file.write(Object.keys(generator()).join(',') + '\n');
     do {
+      if (i % 100000 === 0) {
+        console.log(file.path, i.toLocaleString());
+      }
       if (i === quantity) {
         // last time!
         file.write(Object.values(generator(i)).join('\t') + '\n');

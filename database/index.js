@@ -1,3 +1,4 @@
+// DO NOT USE, INSTEAD, USE CASSANDRA
 const mysql = require('mysql');
 
 const connection = mysql.createConnection({
