@@ -7,6 +7,7 @@
  */
 const NR_LICENSE = require('./newrelic.config.js');
 exports.config = {
+  agent_enabled = false,
   /**
    * Array of application names.
    */

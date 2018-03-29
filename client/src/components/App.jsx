@@ -65,9 +65,9 @@ class App extends React.Component {
       tip1: null,
       tip2: null,
       tip3: null,
-      photo1: '/loading.gif',
-      photo2: '/loading.gif',
-      photo3: '/loading.gif',
+      photo1: null,
+      photo2: null,
+      photo3: null,
     };
   }
 
@@ -120,18 +120,21 @@ class App extends React.Component {
       .get(`/sidebar/photos/${id1}`)
       .then((response) => {
         // this.setState({photo1: response.data.thumbnailurl});
+        this.setState({photo1: `https://s3-us-west-1.amazonaws.com/sdc-thumbs/${this.state.alsoViewed1.restaurant_id % 100 + 1}.jpg`});
       })
       .catch((err) => {throw err});
     axios
       .get(`/sidebar/photos/${id2}`)
       .then((response) => {
         // this.setState({photo2: response.data.thumbnailurl});
+        this.setState({photo2: `https://s3-us-west-1.amazonaws.com/sdc-thumbs/${this.state.alsoViewed2.restaurant_id % 100 + 1}.jpg`});
       })
       .catch((err) => {throw err});
     axios
       .get(`/sidebar/photos/${id3}`)
       .then((response) => {
         // this.setState({photo3: response.data.thumbnailurl});
+        this.setState({photo3: `https://s3-us-west-1.amazonaws.com/sdc-thumbs/${this.state.alsoViewed3.restaurant_id % 100 + 1}.jpg`});
       })
       .catch((err) => {throw err});
 
