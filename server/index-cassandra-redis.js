@@ -6,6 +6,11 @@ const cassandra = require('cassandra-driver');
 var redis = require('redis');
 var redisClient = redis.createClient({host : 'localhost', port : 6379});
 const EXPIRATION_INTERVAL = 360;
+// Development DB
+const client = new cassandra.Client({ contactPoints: ['localhost'], keyspace: 'chompy_bottom_right' });
+
+// Deployed DB
+// const client = new cassandra.Client({ contactPoints: ['172.31.13.166', '172.31.12.58'], keyspace: 'chompy_bottom_right' });
 
 
 function cache(req, res, next) {
@@ -51,11 +56,6 @@ function cachePhotos(req, res, next) {
 }
 
 
-// Development DB
-const client = new cassandra.Client({ contactPoints: ['localhost'], keyspace: 'chompy_bottom_right' });
-
-// Deployed DB
-// const client = new cassandra.Client({ contactPoints: ['cassandra://database'], keyspace: 'chompy_bottom_right' });
 
 const path = require("path");
 app.use(express.static("./client/dist/"));

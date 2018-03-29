@@ -5,7 +5,7 @@ const cassandra = require('cassandra-driver');
 // Development DB
 const client = new cassandra.Client({ contactPoints: ['localhost'], keyspace: 'chompy_bottom_right' });
 // Deployed DB
-// const client = new cassandra.Client({ contactPoints: ['cassandra://database'], keyspace: 'chompy_bottom_right' });
+// const client = new cassandra.Client({ contactPoints: ['172.31.13.166', '172.31.12.58'], keyspace: 'chompy_bottom_right' });
 const path = require("path");
 // const morgan = require('morgan');
 

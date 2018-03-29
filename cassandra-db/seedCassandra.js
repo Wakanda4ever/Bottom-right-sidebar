@@ -2,7 +2,8 @@ const fs = require('fs');
 const Promise = require('bluebird');
 const cassandra = require('cassandra-driver');
 const client = new cassandra.Client({
-  contactPoints: ['localhost'],
+  // contactPoints: ['localhost'], // Development
+  contactPoints: ['172.31.13.166', '172.31.12.58'], // Deploy
   promiseFactory: Promise.fromCallback
 });
 
